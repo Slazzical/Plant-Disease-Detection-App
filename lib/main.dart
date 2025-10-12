@@ -1,7 +1,16 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:plant_disease_detection/screens/auth_screen.dart'; // We'll create this file
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
+import 'package:plant_disease_detection/firebase_options.dart';
+import 'package:plant_disease_detection/screens/auth_screen.dart';
+import 'package:plant_disease_detection/screens/home_screen.dart'; // Import your new home screen
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -13,10 +22,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Verdia',
       theme: ThemeData(
-        primarySwatch: Colors.green, // A nice plant-related primary color
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AuthScreen(), // Our entry point for authentication
+      // --- Changes Start Here ---
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(), // Listen to auth state changes
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator()); // Show loading indicator
+          }
+          if (snapshot.hasData) {
+            // User is logged in
+            return const HomeScreen(); // Go to home screen
+          }
+          // User is not logged in
+          return const AuthScreen(); // Go to authentication screen
+        },
+      ),
+      // --- Changes End Here ---
     );
   }
 }
