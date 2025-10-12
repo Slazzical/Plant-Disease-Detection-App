@@ -1,5 +1,6 @@
+// lib/screens/auth_screen.dart
 import 'package:flutter/material.dart';
-import 'package:plant_disease_detection/widgets/login_form.dart'; // We'll create these files
+import 'package:plant_disease_detection/widgets/login_form.dart';
 import 'package:plant_disease_detection/widgets/signup_form.dart';
 
 enum AuthMode { login, signup }
@@ -23,6 +24,14 @@ class _AuthScreenState extends State<AuthScreen> {
       }
     });
   }
+
+  // --- New method to handle successful signup ---
+  void _handleSignupSuccess() {
+    setState(() {
+      _authMode = AuthMode.login; // Switch to login mode
+    });
+  }
+  // --- End New method ---
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +57,11 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
-              _authMode == AuthMode.login ? const LoginForm() : const SignUpForm(),
+              _authMode == AuthMode.login
+                  ? const LoginForm()
+                  : SignUpForm(
+                      onSignupSuccess: _handleSignupSuccess, // Pass the callback
+                    ),
               const SizedBox(height: 20),
               TextButton(
                 onPressed: _switchAuthMode,
