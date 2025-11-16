@@ -144,6 +144,12 @@ class _LoginFormState extends State<LoginForm> {
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/forgot-password');
+                },
+                child: const Text('Forgot Password?'),
+              ),
             ],
           ),
         ),
