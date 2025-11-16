@@ -66,4 +66,5 @@ class DefaultFirebaseOptions {
     projectId: 'verdia-de428',
     storageBucket: 'verdia-de428.firebasestorage.app',
   );
+
 }

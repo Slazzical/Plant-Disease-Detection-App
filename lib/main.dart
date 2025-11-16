@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import 'package:plant_disease_detection/firebase_options.dart';
 import 'package:plant_disease_detection/screens/auth_screen.dart';
 import 'package:plant_disease_detection/screens/home_screen.dart'; // Import your new home screen
-
+import 'package:plant_disease_detection/screens/forgot_password_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -40,6 +40,9 @@ class MyApp extends StatelessWidget {
           return const AuthScreen(); // Go to authentication screen
         },
       ),
+      routes: {
+        '/forgot-password': (context) => const ForgotPasswordScreen(),
+      },
       // --- Changes End Here ---
     );
   }
