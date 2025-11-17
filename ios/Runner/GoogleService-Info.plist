@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>223834220558-bloeqoi0hpu5gb32ufkv58e7d0sudath.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.223834220558-bloeqoi0hpu5gb32ufkv58e7d0sudath</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>223834220558-n0oo73l07givid25bvhsdse8453p4a4g.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDwJ3taE0Dk-MSX8Yq-mUsymLXvcDVt-qs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>223834220558</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mycompany.verdia</string>
+	<key>PROJECT_ID</key>
+	<string>verdia-2jcffa</string>
+	<key>STORAGE_BUCKET</key>
+	<string>verdia-2jcffa.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:223834220558:ios:3d04eaa2bc1e2b9965b45f</string>
+</dict>
+</plist>

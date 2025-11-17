@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "223834220558",
+    "project_id": "verdia-2jcffa",
+    "storage_bucket": "verdia-2jcffa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223834220558:android:2a5304d07ea54c9765b45f",
+        "android_client_info": {
+          "package_name": "com.mycompany.verdia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223834220558-n0oo73l07givid25bvhsdse8453p4a4g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.verdia",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "223834220558-kbkomkgkm94rk6c1iafvrot68naffie3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBviuo_x4jy6g5kn6ai5dnqYeeBwciXjIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223834220558-kbkomkgkm94rk6c1iafvrot68naffie3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "223834220558-bloeqoi0hpu5gb32ufkv58e7d0sudath.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.verdia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
