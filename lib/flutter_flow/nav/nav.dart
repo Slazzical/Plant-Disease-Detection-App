@@ -97,6 +97,51 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: RegisterWidget.routeName,
           path: RegisterWidget.routePath,
           builder: (context, params) => RegisterWidget(),
+        ),
+        FFRoute(
+          name: PlantDetailWidget.routeName,
+          path: PlantDetailWidget.routePath,
+          builder: (context, params) => PlantDetailWidget(
+            imageURL: params.getParam(
+              'imageURL',
+              ParamType.String,
+            ),
+            diseaseName: params.getParam(
+              'diseaseName',
+              ParamType.String,
+            ),
+            confidenceScore: params.getParam(
+              'confidenceScore',
+              ParamType.double,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PlantOnboardingWidget.routeName,
+          path: PlantOnboardingWidget.routePath,
+          builder: (context, params) => PlantOnboardingWidget(),
+        ),
+        FFRoute(
+          name: PlantDetailCopyWidget.routeName,
+          path: PlantDetailCopyWidget.routePath,
+          builder: (context, params) => PlantDetailCopyWidget(
+            imageURL: params.getParam(
+              'imageURL',
+              ParamType.String,
+            ),
+            diseaseName: params.getParam(
+              'diseaseName',
+              ParamType.String,
+            ),
+            confidenceScore: params.getParam(
+              'confidenceScore',
+              ParamType.double,
+            ),
+            userLocation: params.getParam(
+              'userLocation',
+              ParamType.LatLng,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

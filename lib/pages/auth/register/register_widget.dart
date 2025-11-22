@@ -72,7 +72,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     'assets/images/Screenshot_2025-11-16_222316.png',
                     width: double.infinity,
                     height: 174.8,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Text(
