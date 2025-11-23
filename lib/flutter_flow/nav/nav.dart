@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -99,24 +100,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => RegisterWidget(),
         ),
         FFRoute(
-          name: PlantDetailWidget.routeName,
-          path: PlantDetailWidget.routePath,
-          builder: (context, params) => PlantDetailWidget(
-            imageURL: params.getParam(
-              'imageURL',
-              ParamType.String,
-            ),
-            diseaseName: params.getParam(
-              'diseaseName',
-              ParamType.String,
-            ),
-            confidenceScore: params.getParam(
-              'confidenceScore',
-              ParamType.double,
-            ),
-          ),
-        ),
-        FFRoute(
           name: PlantOnboardingWidget.routeName,
           path: PlantOnboardingWidget.routePath,
           builder: (context, params) => PlantOnboardingWidget(),
@@ -140,6 +123,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             userLocation: params.getParam(
               'userLocation',
               ParamType.LatLng,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PlantHistoryDetailWidget.routeName,
+          path: PlantHistoryDetailWidget.routePath,
+          asyncParams: {
+            'plantDoc':
+                getDoc(['saved_plants'], SavedPlantsRecord.fromSnapshot),
+          },
+          builder: (context, params) => PlantHistoryDetailWidget(
+            plantDoc: params.getParam(
+              'plantDoc',
+              ParamType.Document,
             ),
           ),
         )

@@ -1,5 +1,4 @@
 import '/backend/api_requests/api_calls.dart';
-import '/components/plant_info/plant_info_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'plant_onboarding_widget.dart' show PlantOnboardingWidget;
@@ -29,16 +28,10 @@ class PlantOnboardingModel extends FlutterFlowModel<PlantOnboardingWidget> {
 
   // Stores action output result for [Backend Call - API (predictDisease)] action in Button widget.
   ApiCallResponse? apiResultd4k;
-  // Model for PlantInfo component.
-  late PlantInfoModel plantInfoModel;
 
   @override
-  void initState(BuildContext context) {
-    plantInfoModel = createModel(context, () => PlantInfoModel());
-  }
+  void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    plantInfoModel.dispose();
-  }
+  void dispose() {}
 }

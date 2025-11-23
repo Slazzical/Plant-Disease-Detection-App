@@ -42,14 +42,13 @@ class GetWeatherCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'GetWeather',
-      apiUrl: 'https://api.openweathermap.org/data/2.5/weather',
+      apiUrl:
+          'http://api.weatherapi.com/v1/current.json?key=47806eb423134eebaec103703252311&q=${lat},${lon}',
       callType: ApiCallType.GET,
       headers: {},
       params: {
         'lat': lat,
         'lon': lon,
-        'appid ': "ed3010c97bf8684ea40bc8c696a36d52",
-        'units': "metric",
       },
       returnBody: true,
       encodeBodyUtf8: false,
