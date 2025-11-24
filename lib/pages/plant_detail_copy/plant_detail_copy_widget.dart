@@ -10,6 +10,7 @@ import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'plant_detail_copy_model.dart';
 export 'plant_detail_copy_model.dart';
 
@@ -46,9 +47,14 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(
+        Duration(
+          milliseconds: 3000,
+        ),
+      );
       _model.weatherResponse = await GetWeatherCall.call(
-        lat: functions.getLatitude(widget.userLocation),
-        lon: functions.getLongitude(widget.userLocation),
+        lat: functions.getLatitude(FFAppState().globalUserLocation),
+        lon: functions.getLongitude(FFAppState().globalUserLocation),
       );
 
       if (!(_model.weatherResponse?.succeeded ?? true)) {
@@ -66,6 +72,8 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
         );
       }
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -77,6 +85,8 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -108,34 +118,40 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SingleChildScrollView(
-                child: Column(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Align(
                       alignment: AlignmentDirectional(0.0, 0.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0),
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            valueOrDefault<String>(
-                              widget.imageURL,
-                              'https://placehold.co/600x400',
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 0.0),
+                        child: Container(
+                          width: 300.0,
+                          height: 300.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30.0),
+                              bottomRight: Radius.circular(30.0),
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
                             ),
-                            width: double.infinity,
-                            height: 200.0,
-                            fit: BoxFit.contain,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              valueOrDefault<String>(
+                                widget.imageURL,
+                                'https://placehold.co/600x400',
+                              ),
+                              width: double.infinity,
+                              height: 200.0,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
@@ -516,66 +532,58 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 5.0, 3.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          await SavedPlantsRecord.collection
-                              .doc()
-                              .set(createSavedPlantsRecordData(
-                                diseaseName: widget.diseaseName,
-                                confidence: widget.confidenceScore?.toString(),
-                                imageUrl: widget.imageURL,
-                                createdAt: getCurrentTimestamp,
-                                treatmentAdvice:
-                                    functions.getTreatmentAdvice('', ''),
-                                userRef: currentUserReference,
-                              ));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Diagnosis Saved Successfully',
-                                style: TextStyle(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 5.0, 3.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await SavedPlantsRecord.collection
+                                .doc()
+                                .set(createSavedPlantsRecordData(
+                                  diseaseName: widget.diseaseName,
+                                  confidence:
+                                      widget.confidenceScore?.toString(),
+                                  imageUrl: widget.imageURL,
+                                  createdAt: getCurrentTimestamp,
+                                  treatmentAdvice:
+                                      functions.getTreatmentAdvice('', ''),
+                                  userRef: currentUserReference,
+                                ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Diagnosis Saved Successfully',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
                                 ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
                               ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).secondary,
-                            ),
-                          );
+                            );
 
-                          context.pushNamed(HomeWidget.routeName);
-                        },
-                        text: 'Save Result',
-                        options: FFButtonOptions(
-                          width: 170.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    font: GoogleFonts.comfortaa(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
+                            context.pushNamed(HomeWidget.routeName);
+                          },
+                          text: 'Save Result',
+                          options: FFButtonOptions(
+                            width: 170.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  font: GoogleFonts.comfortaa(
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .fontWeight,
@@ -583,39 +591,40 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
                                         .titleSmall
                                         .fontStyle,
                                   ),
-                          elevation: 3.0,
-                          borderRadius: BorderRadius.circular(12.0),
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                            elevation: 3.0,
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 20.0, 3.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          context.pushNamed(HomeWidget.routeName);
-                        },
-                        text: 'Back Home',
-                        options: FFButtonOptions(
-                          width: 170.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).alternate,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    font: GoogleFonts.comfortaa(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context).error,
-                                    letterSpacing: 0.0,
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 20.0, 3.0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            context.pushNamed(HomeWidget.routeName);
+                          },
+                          text: 'Back Home',
+                          options: FFButtonOptions(
+                            width: 170.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).alternate,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  font: GoogleFonts.comfortaa(
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .fontWeight,
@@ -623,15 +632,45 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
                                         .titleSmall
                                         .fontStyle,
                                   ),
-                          elevation: 3.0,
-                          borderRadius: BorderRadius.circular(12.0),
+                                  color: FlutterFlowTheme.of(context).error,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                            elevation: 3.0,
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  valueOrDefault<String>(
+                    FFAppState().globalUserLocation?.toString(),
+                    'Location not found',
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        font: GoogleFonts.comfortaa(
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                        letterSpacing: 0.0,
+                        fontWeight:
+                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                      ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

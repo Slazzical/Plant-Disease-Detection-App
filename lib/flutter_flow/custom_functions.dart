@@ -49,23 +49,40 @@ String? getTreatmentAdvice(
     return "☀️ WEATHER TIP: It is sunny.\n\n" +
         treatment +
         "\n\nADVICE: Avoid spraying in direct mid-day sun to prevent leaf burn. Spray in the early morning or late evening.";
-  } else if (w.contains("cloud")) {
-    return "☁️ WEATHER TIP: It is cloudy.\n\n" +
+  }
+  // UPDATE THIS PART:
+  else if (w.contains("cloud") ||
+      w.contains("overcast") ||
+      w.contains("mist") ||
+      w.contains("fog")) {
+    return "☁️ WEATHER TIP: It is " +
+        w +
+        ".\n\n" +
         treatment +
         "\n\nThis is a good time to apply treatment as evaporation is lower.";
   }
 
   return treatment;
+
+  return treatment;
 }
 
 double? getLatitude(LatLng? location) {
-  double getLatitude(LatLng location) {
-    return location.latitude;
+  // Safety Check: If location is missing, return Nairobi Latitude
+  if (location == null) {
+    return -1.2921;
   }
+
+  // Otherwise, return the real Latitude
+  return location.latitude;
 }
 
 double? getLongitude(LatLng? location) {
-  double getLongitude(LatLng location) {
-    return location.longitude;
+  // Safety Check: If location is missing, return Nairobi Longitude
+  if (location == null) {
+    return 36.8219;
   }
+
+  // Otherwise, return the real Longitude
+  return location.longitude;
 }

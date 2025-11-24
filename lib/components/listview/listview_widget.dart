@@ -25,6 +25,8 @@ class _ListviewWidgetState extends State<ListviewWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ListviewModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

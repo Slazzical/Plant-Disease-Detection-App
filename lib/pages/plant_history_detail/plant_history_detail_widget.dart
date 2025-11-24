@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +35,8 @@ class _PlantHistoryDetailWidgetState extends State<PlantHistoryDetailWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PlantHistoryDetailModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -259,6 +262,8 @@ class _PlantHistoryDetailWidgetState extends State<PlantHistoryDetailWidget> {
                   child: FFButtonWidget(
                     onPressed: () async {
                       await widget.plantDoc!.reference.delete();
+
+                      context.pushNamed(HomeWidget.routeName);
                     },
                     text: 'Delete',
                     icon: FaIcon(

@@ -31,6 +31,8 @@ class _PlantInfoWidgetState extends State<PlantInfoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PlantInfoModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

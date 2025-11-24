@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
-import '/flutter_flow/permissions_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,6 +31,8 @@ class _PlantOnboardingWidgetState extends State<PlantOnboardingWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PlantOnboardingModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -273,7 +274,6 @@ class _PlantOnboardingWidgetState extends State<PlantOnboardingWidget> {
                               currentUserLocationValue =
                                   await getCurrentUserLocation(
                                       defaultLocation: LatLng(0.0, 0.0));
-                              await requestPermission(locationPermission);
                               final selectedMedia =
                                   await selectMediaWithSourceBottomSheet(
                                 context: context,
@@ -329,6 +329,14 @@ class _PlantOnboardingWidgetState extends State<PlantOnboardingWidget> {
                                 }
                               }
 
+                              FFAppState().globalUserLocation =
+                                  currentUserLocationValue;
+                              safeSetState(() {});
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 3000,
+                                ),
+                              );
                               _model.apiResultd4k =
                                   await PredictDiseaseCall.call(
                                 imageFromApp:

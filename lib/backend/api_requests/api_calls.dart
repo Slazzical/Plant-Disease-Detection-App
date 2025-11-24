@@ -43,7 +43,7 @@ class GetWeatherCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetWeather',
       apiUrl:
-          'http://api.weatherapi.com/v1/current.json?key=47806eb423134eebaec103703252311&q=${lat},${lon}',
+          'https://api.weatherapi.com/v1/current.json?key=47806eb423134eebaec103703252311&q=${lat},${lon}',
       callType: ApiCallType.GET,
       headers: {},
       params: {

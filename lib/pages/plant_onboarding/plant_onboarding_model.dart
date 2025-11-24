@@ -11,6 +11,8 @@ class PlantOnboardingModel extends FlutterFlowModel<PlantOnboardingWidget> {
 
   double? resultConfidence;
 
+  LatLng? temploc;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for PageView widget.
