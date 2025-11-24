@@ -140,10 +140,9 @@ class _PlantHistoryDetailWidgetState extends State<PlantHistoryDetailWidget> {
                       ),
                       Expanded(
                         child: Text(
-                          valueOrDefault<String>(
-                            widget.plantDoc?.diseaseName,
-                            '[disease]',
-                          ),
+                          (String rawText) {
+                            return rawText.replaceAll("_", " ");
+                          }(widget.plantDoc!.diseaseName),
                           style:
                               FlutterFlowTheme.of(context).bodyLarge.override(
                                     font: GoogleFonts.comfortaa(
@@ -200,10 +199,14 @@ class _PlantHistoryDetailWidgetState extends State<PlantHistoryDetailWidget> {
                         ),
                       ),
                       Text(
-                        valueOrDefault<String>(
+                        (String score) {
+                          return (double.parse(score) * 100)
+                                  .toStringAsFixed(1) +
+                              "%";
+                        }(valueOrDefault<String>(
                           widget.plantDoc?.confidence,
                           '[confidence]',
-                        ),
+                        )),
                         style: FlutterFlowTheme.of(context).bodyLarge.override(
                               font: GoogleFonts.comfortaa(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -231,28 +234,33 @@ class _PlantHistoryDetailWidgetState extends State<PlantHistoryDetailWidget> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        valueOrDefault<String>(
-                          widget.plantDoc?.treatmentAdvice,
-                          '[treatment_advice]',
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Text(
+                          valueOrDefault<String>(
+                            widget.plantDoc?.treatmentAdvice,
+                            '[treatment_advice]',
+                          ),
+                          textAlign: TextAlign.center,
+                          style:
+                              FlutterFlowTheme.of(context).bodyLarge.override(
+                                    font: GoogleFonts.comfortaa(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontStyle,
+                                  ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyLarge.override(
-                              font: GoogleFonts.comfortaa(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .fontStyle,
-                              ),
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontStyle,
-                            ),
                       ),
                     ],
                   ),

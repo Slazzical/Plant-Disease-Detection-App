@@ -243,7 +243,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      listViewSavedPlantsRecord.diseaseName,
+                                      (String rawText) {
+                                        return rawText.replaceAll("_", " ");
+                                      }(listViewSavedPlantsRecord.diseaseName),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(

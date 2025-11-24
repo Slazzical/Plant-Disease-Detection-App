@@ -176,10 +176,9 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   20.0, 10.0, 20.0, 0.0),
                               child: Text(
-                                valueOrDefault<String>(
-                                  widget.diseaseName,
-                                  '[diseaseName]',
-                                ),
+                                (String rawText) {
+                                  return rawText.replaceAll("_", " ");
+                                }(widget.diseaseName!),
                                 style: FlutterFlowTheme.of(context)
                                     .titleLarge
                                     .override(
@@ -550,8 +549,13 @@ class _PlantDetailCopyWidgetState extends State<PlantDetailCopyWidget> {
                                       widget.confidenceScore?.toString(),
                                   imageUrl: widget.imageURL,
                                   createdAt: getCurrentTimestamp,
-                                  treatmentAdvice:
-                                      functions.getTreatmentAdvice('', ''),
+                                  treatmentAdvice: functions.getTreatmentAdvice(
+                                      widget.diseaseName!,
+                                      getJsonField(
+                                        (_model.weatherResponse?.jsonBody ??
+                                            ''),
+                                        r'''$.current.condition.text''',
+                                      ).toString()),
                                   userRef: currentUserReference,
                                 ));
                             ScaffoldMessenger.of(context).showSnackBar(
